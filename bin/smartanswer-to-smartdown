@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.expand_path("../lib", File.dirname(__FILE__))
+
+require 'smartanswer_to_smartdown'
+
+def usage
+  $stderr.puts <<USAGE
+Usage: #{File.basename(__FILE__)} <path/to/lib/flows/some-smart-answer.rb> <output-dir>
+
+Assumes that smart answer pointed at is inside of the smartanswer project
+folder. We load other data (translation files etc) from the smart answer
+project.
+
+If output-dir does not exist, it will be created.
+
+USAGE
+end
+
+if ARGV.size == 2
+  source_path, output_path = ARGV
+  SmartanswerToSmartdown.new(source_path, output_path).call
+  exit(0)
+else
+  usage
+  exit(1)
+end
