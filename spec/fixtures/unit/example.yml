@@ -1,0 +1,24 @@
+en-GB:
+  flow:
+    example:
+      title: Check if you need a UK visa
+      meta:
+        description: You may need a visa to come to the UK to visit, study or work.
+      body: |
+        You may need a visa to come to the UK to visit, study or work.
+
+      purpose_of_visit?:
+        title: What are you coming to the UK to do?
+        options:
+          study: "Study"
+          work: "Work or business"
+
+      outcome_study:
+        title: You’ll need a visa to study in the UK
+        body: |
+          The visa you apply for depends on your circumstances.
+
+      outcome_work:
+        title: You’ll need a visa to come to the UK to work or do business
+        body: |
+          The visa you apply for depends on your circumstances.
