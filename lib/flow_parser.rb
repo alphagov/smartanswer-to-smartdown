@@ -2,12 +2,9 @@ require 'ruby_parser'
 require 'sexp_path'
 
 require 'translations'
-
-module SexpPathDsl
-  def Q?(&block)
-    SexpPath::SexpQueryBuilder.do(&block)
-  end
-end
+require 'sexp_path_dsl'
+require 'multiple_choice_question'
+require 'outcome'
 
 class FlowParser
   include SexpPathDsl
@@ -26,28 +23,24 @@ class FlowParser
     @questions ||= extract_questions
   end
 
-  def extract_questions
-    (parse_tree / question_query).map do |match|
-      Question.new(translations, match["method_name"], match["method_args"], match["body"])
-    end
-  end
-
-  def question_query
-    Q? {
-      s(:iter,
-        s(:call, nil, m(%r{#{QUESTION_METHODS.join("|")}}) % 'method_name', ___ % "method_args"),
-        s(:args, ___ % "block_args"),
-        ___ % "body")
-    }
+  def outcomes
+    @outcomes ||= extract_outcomes
   end
 
   def coversheet
     {
-      title: translations.get("title"),
       start_with: questions.first.name,
       satisfies_need: satisfies_need,
       meta_description: meta_description
-    }
+    }.reject { |k,v| v.nil? }
+  end
+
+  def title
+    translations.get("title")
+  end
+
+  def body
+    translations.get("body")
   end
 
   def satisfies_need
@@ -59,6 +52,7 @@ class FlowParser
     translations.get("meta.description")
   end
 
+private
   QUESTION_METHODS = [
     :multiple_choice,
     :country_select,
@@ -83,36 +77,49 @@ class FlowParser
     @parse_tree ||= RubyParser.for_current_ruby.parse(@ruby)
   end
 
-private
+  def extract_questions
+    (parse_tree / question_query).map { |match| build_question(match) }
+  end
+
+  def build_question(match)
+    question_type = match["question_method"]
+    question_args = match["question_args"]
+    question_body = match["body"]
+    case question_type
+    when :multiple_choice
+      MultipleChoiceQuestion.new(translations, question_args, question_body)
+    else
+      raise "Unknown question type #{question_type}"
+    end
+  end
+
+  def build_outcome(match)
+
+  end
+
+  def question_query
+    Q? {
+      s(:iter,
+        s(:call, nil, m(%r{#{QUESTION_METHODS.join("|")}}) % 'question_method', ___ % "question_args"),
+        s(:args, ___ % "block_args"),
+        ___ % "body")
+    }
+  end
+
   def translations
     @translations ||= Translations.new(@name, @yaml)
   end
 
-  class Question
-    include SexpPathDsl
+  def outcome_query
+    Q? {
+      s(:call, nil, :outcome, s(:lit, atom % "outcome_name"))
+    }
+  end
 
-    attr_reader :question_type, :name, :args, :body, :translations
-
-    private :translations
-
-    def initialize(translations, question_type, args, body)
-      @translations = translations
-      @question_type = question_type
-      @name, @args = parse_args(args)
-      @body = body
-    end
-
-    def title
-      translations.get("#{@name}.title")
-    end
-
-  private
-    def parse_args(args)
-      match = (args / Q? { s( s(:lit, atom % "name"), ___ % "extra_args") })
-      [
-        match.first["name"],
-        match.first["extra_args"]
-      ]
+  def extract_outcomes
+    (parse_tree / outcome_query).map do |match|
+      Outcome.new(translations, match["outcome_name"])
     end
   end
+
 end

@@ -27,7 +27,6 @@ en-GB:
       outcome_work:
         title: You’ll need a visa to come to the UK to work or do business
         body: |
-
           The visa you apply for depends on your circumstances.
 
           %{if_turkey}

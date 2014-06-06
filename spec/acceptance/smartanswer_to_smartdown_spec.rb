@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'pathname'
 require 'tmpdir'
 require 'fileutils'
@@ -22,7 +23,7 @@ describe "smartanswer-to-smartdown" do
 
   RSpec::Matchers.define :be_an_identical_directory_tree_to do |expected_directory_tree_path|
     match do |actual_directory_tree_path|
-      @comparison_output = `diff -r #{expected_directory_tree_path} #{actual_directory_tree_path}`
+      @comparison_output = `diff -u -r #{expected_directory_tree_path} #{actual_directory_tree_path}`.force_encoding("utf-8")
       $?.success?
     end
 
