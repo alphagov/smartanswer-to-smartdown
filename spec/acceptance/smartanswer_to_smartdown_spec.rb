@@ -17,7 +17,7 @@ describe "smartanswer-to-smartdown" do
   end
 
   after(:each) do
-    # FileUtils.remove_entry_secure(@tmpdir)
+    FileUtils.remove_entry_secure(@tmpdir)
   end
 
   RSpec::Matchers.define :be_an_identical_directory_tree_to do |expected_directory_tree_path|
@@ -36,7 +36,7 @@ describe "smartanswer-to-smartdown" do
   end
 
   it "reads a smartanswer, parses it and spits out files" do
-    sample_dir = path('spec/fixtures')
+    sample_dir = path('spec/fixtures/acceptance')
     Bundler.with_clean_env do
       output = `bundle exec #{path('bin')}/smartanswer-to-smartdown #{sample_dir + 'input/lib/flows/check-uk-visa.rb'} #{@tmpdir} 2>&1`
       raise(output) unless $?.success?
