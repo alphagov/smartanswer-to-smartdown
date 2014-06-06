@@ -11,3 +11,4 @@
 * purpose_of_visit is 'work' => outcome_work
 * purpose_of_visit is 'study' => outcome_study
 * purpose_of_visit is 'tourism' => outcome_tourism
+* work is 'yes' => outcome_work

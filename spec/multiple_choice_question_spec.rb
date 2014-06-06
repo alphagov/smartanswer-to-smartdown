@@ -84,15 +84,18 @@ RUBY
     end
 
     context "option with next_node_if" do
-      let(:ruby) { <<-RUBY
-        multiple_choice(:question) {
-          option :opt1
-          next_node_if(:outcome1, responded_with("opt1"))
-        }
-        RUBY
-      }
+      subject { question.next_node_rules.first.predicate }
+      let(:ruby) { %Q[multiple_choice(:question) { next_node_if(:outcome1, #{predicate}) }] }
 
-      it { should eq([Rule.new(:outcome1, Predicate::Equality.new("question", "opt1"))]) }
+      context 'responded_with("opt1") predicate' do
+        let(:predicate) { %{responded_with("opt1")} }
+        it { should eq(Predicate::Equality.new("question", "opt1")) }
+      end
+
+      context 'variable_matches predicate' do
+        let(:predicate) { %{variable_matches(:my_var, "opt1")} }
+        it { should eq(Predicate::Equality.new("my_var", "opt1")) }
+      end
     end
   end
 end

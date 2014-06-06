@@ -58,9 +58,18 @@ private
   end
 
   def build_predicate(predicate_sexp)
-    matches = predicate_sexp / Q? { s(:call, nil, :responded_with, s(:str, atom % "expected_value")) }
-    matches.map do |match|
-      Predicate::Equality.new(response_variable_name, match["expected_value"])
+    predicate_sexp.map do |predicate|
+      match = {}
+      rw = Q? { s(:call, nil, :responded_with, s(:str, atom % "expected_value")) }
+      vm = Q? { s(:call, nil, :variable_matches,
+        s(:lit, atom % "var_name"),
+        s(:str, atom % "expected_value"))
+      }
+      if rw.satisfy?(predicate, match)
+        Predicate::Equality.new(response_variable_name, match["expected_value"])
+      elsif vm.satisfy?(predicate, match)
+        Predicate::Equality.new(match["var_name"].to_s, match["expected_value"])
+      end
     end
   end
 

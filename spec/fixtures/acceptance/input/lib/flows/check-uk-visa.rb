@@ -7,6 +7,7 @@ multiple_choice :purpose_of_visit? do
   option :tourism
 
   next_node_if(:outcome_tourism, responded_with("tourism"))
+  next_node_if(:outcome_work, variable_matches(:work, "yes"))
 end
 
 outcome :outcome_work
