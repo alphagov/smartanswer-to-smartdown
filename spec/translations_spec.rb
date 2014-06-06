@@ -9,6 +9,6 @@ describe Translations do
   }
 
   it "can get a translation string by dotted path" do
-    expect(translations.get("flow.example.title")).to eq "Check if you need a UK visa"
+    expect(translations.get("title")).to eq "Check if you need a UK visa"
   end
 end

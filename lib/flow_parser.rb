@@ -1,6 +1,8 @@
 require 'ruby_parser'
 require 'sexp_path'
 
+require 'translations'
+
 module SexpPathDsl
   def Q?(&block)
     SexpPath::SexpQueryBuilder.do(&block)
@@ -8,21 +10,53 @@ module SexpPathDsl
 end
 
 class FlowParser
-  attr_reader :questions
-
   include SexpPathDsl
 
-  def initialize(ruby, yaml)
+  def initialize(name, ruby, yaml)
+    @name = name
     @ruby = ruby
     @yaml = yaml
-    parse!
   end
 
-  def self.parse(ruby, yaml)
-    FlowParser.new(ruby, yaml)
+  def self.parse(flow_name, ruby, yaml)
+    FlowParser.new(flow_name, ruby, yaml)
+  end
+
+  def questions
+    @questions ||= extract_questions
+  end
+
+  def extract_questions
+    (parse_tree / question_query).map do |match|
+      Question.new(translations, match["method_name"], match["method_args"], match["body"])
+    end
+  end
+
+  def question_query
+    Q? {
+      s(:iter,
+        s(:call, nil, m(%r{#{QUESTION_METHODS.join("|")}}) % 'method_name', ___ % "method_args"),
+        s(:args, ___ % "block_args"),
+        ___ % "body")
+    }
   end
 
   def coversheet
+    {
+      title: translations.get("title"),
+      start_with: questions.first.name,
+      satisfies_need: satisfies_need,
+      meta_description: meta_description
+    }
+  end
+
+  def satisfies_need
+    match = find_one(Q? { s(:call, nil, :satisfies_need, s(:str, atom % "need_id")) })
+    match && match['need_id']
+  end
+
+  def meta_description
+    translations.get("meta.description")
   end
 
   QUESTION_METHODS = [
@@ -36,36 +70,40 @@ class FlowParser
     :checkbox_question
   ]
 
-private
-  def parse!
-    parsed = RubyParser.for_current_ruby.parse(@ruby)
-    translations = Translations.new(@yaml)
-    @questions = extract_questions(parsed, translations)
+  def find(query)
+    parse_tree / query
   end
 
-  def extract_questions(parsed)
-    query = Q? {
-      s(:iter,
-        s(:call, nil, m(%r{#{QUESTION_METHODS.join("|")}}) % 'method_name', ___ % "method_args"),
-        s(:args, ___ % "block_args"),
-        ___ % "body")
-    }
-    (parsed / query).map {|sexp_match|
-      Question.new(sexp_match["method_name"], sexp_match["method_args"], sexp_match["body"])}
+  def find_one(query)
+    matches = parse_tree / query
+    matches.any? ? matches.first : nil
+  end
+
+  def parse_tree
+    @parse_tree ||= RubyParser.for_current_ruby.parse(@ruby)
+  end
+
+private
+  def translations
+    @translations ||= Translations.new(@name, @yaml)
   end
 
   class Question
     include SexpPathDsl
 
-    attr_reader :question_type, :name, :args, :body
+    attr_reader :question_type, :name, :args, :body, :translations
 
-    def initialize(question_type, args, body)
+    private :translations
+
+    def initialize(translations, question_type, args, body)
+      @translations = translations
       @question_type = question_type
       @name, @args = parse_args(args)
       @body = body
     end
 
     def title
+      translations.get("#{@name}.title")
     end
 
   private
@@ -75,11 +113,6 @@ private
         match.first["name"],
         match.first["extra_args"]
       ]
-    end
-  end
-
-  class Translations
-    def initialize(yaml)
     end
   end
 end
