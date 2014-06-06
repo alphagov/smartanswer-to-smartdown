@@ -41,6 +41,9 @@ describe "smartanswer-to-smartdown" do
     Bundler.with_clean_env do
       output = `bundle exec #{path('bin')}/smartanswer-to-smartdown #{sample_dir + 'input/lib/flows/check-uk-visa.rb'} #{@tmpdir} 2>&1`
       raise(output) unless $?.success?
+      if !output.strip.empty?
+        puts output
+      end
     end
 
     expect(@tmpdir).to be_an_identical_directory_tree_to(sample_dir + 'expected_output')

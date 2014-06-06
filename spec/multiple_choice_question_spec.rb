@@ -2,15 +2,16 @@ require 'pathname'
 require 'multiple_choice_question'
 require 'flow_parser'
 
-describe MultipleChoiceQuestion do
+describe "parsing a multiple_choice question" do
   def indent(text, num_spaces)
     text.gsub(/^/, " " * num_spaces)
   end
 
   let(:flow_name) { "example" }
   let(:yaml) {
-    {"en-GB" => {"flow" => {"example" => yaml_inner}}}.to_yaml
+    {"en-GB" => {"flow" => {"example" => translation_data}}}.to_yaml
   }
+  let(:translation_data) { nil }
 
   let(:ruby) { <<RUBY
     multiple_choice(:question) { option :opt1 }
@@ -24,32 +25,74 @@ RUBY
 
   let(:option_label) { "LABEL1" }
 
-  context "option label undefined" do
-    let(:yaml_inner) { nil }
+  describe "extracting options" do
+    context "option label absent from translations" do
+      let(:translation_data) { nil }
 
-    it "uses the option name as the label" do
-      expect(question.options.first.label).to eq("opt1")
+      it "uses the option name as the label" do
+        expect(question.options.first.label).to eq("opt1")
+      end
     end
-  end
 
-  context "option label defined at node-level" do
-    let(:yaml_inner) { {"options" => {"opt1" => option_label}} }
+    context "option label defined at node-level in translations" do
+      let(:translation_data) { {"options" => {"opt1" => option_label}} }
 
-    it "gets option label" do
-      expect(question.options.first.label).to eq(option_label)
+      it "gets option label" do
+        expect(question.options.first.label).to eq(option_label)
+      end
     end
-  end
 
-  context "option label overridden at question-level" do
-    let(:yaml_inner) {
-      {
-        "options" => {"opt1" => "will be overridden"},
-        "question" => {"options" => {"opt1" => option_label}}
+    context "option label overridden at question-level" do
+      let(:translation_data) {
+        {
+          "options" => {"opt1" => "will be overridden"},
+          "question" => {"options" => {"opt1" => option_label}}
+        }
       }
-    }
 
-    it "gets option label" do
-      expect(question.options.first.label).to eq(option_label)
+      it "gets option label" do
+        expect(question.options.first.label).to eq(option_label)
+      end
+    end
+  end
+
+  describe "extracting next node rules" do
+    subject(:next_node_rules) { question.next_node_rules }
+
+    context "option with next node defined" do
+      let(:ruby) { "multiple_choice(:question) { option :a => :outcome1 }" }
+
+      it { should eq([Rule.new(:outcome1, Predicate::Equality.new("question", "a"))]) }
+    end
+
+    context "option without next node defined" do
+      let(:ruby) { "multiple_choice(:question) { option :a }" }
+
+      it { should eq([]) }
+    end
+
+    context "combination of option with and without next node defined" do
+      let(:ruby) { <<-RUBY
+        multiple_choice(:question) {
+          option :opt1 => :outcome1
+          option :opt2
+        }
+        RUBY
+      }
+
+      it { should eq([Rule.new(:outcome1, Predicate::Equality.new("question", "opt1"))]) }
+    end
+
+    context "option with next_node_if" do
+      let(:ruby) { <<-RUBY
+        multiple_choice(:question) {
+          option :opt1
+          next_node_if(:outcome1, responded_with("opt1"))
+        }
+        RUBY
+      }
+
+      it { should eq([Rule.new(:outcome1, Predicate::Equality.new("question", "opt1"))]) }
     end
   end
 end

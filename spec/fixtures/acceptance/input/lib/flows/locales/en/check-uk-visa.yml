@@ -12,6 +12,10 @@ en-GB:
         options:
           study: "Study"
           work: "Work or business"
+          tourism: "Tourism"
+
+      outcome_tourism:
+        title: You’ll need a visa to come to the UK to visit
 
       outcome_study:
         title: You’ll need a visa to study in the UK
