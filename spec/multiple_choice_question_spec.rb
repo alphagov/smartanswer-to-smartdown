@@ -97,5 +97,31 @@ RUBY
         it { should eq(Predicate::Equality.new("my_var", "opt1")) }
       end
     end
+
+    context "option with on_condition" do
+      subject { question.next_node_rules.first }
+      let(:predicate1) { 'variable_matches(:a, "apple")' }
+      let(:predicate2) { 'responded_with("opt1")' }
+      let(:ruby) { %Q[
+        multiple_choice(:question) {
+          on_condition(#{predicate1}) {
+            next_node_if(:outcome1, #{predicate2})
+          }
+        }]
+      }
+      it {
+        should eq(
+          OnConditionRule.new(
+            Predicate::Equality.new("a", "apple"),
+            [
+              Rule.new(:outcome1,
+                Predicate::Equality.new("question", "opt1")
+              )
+            ]
+          )
+        )
+      }
+    end
+
   end
 end

@@ -1,6 +1,8 @@
 require "question"
 require "rule"
+require "on_condition_rule"
 require "predicate/equality"
+require "predicate/conjunction"
 
 class MultipleChoiceQuestion < Question
   def options
@@ -30,7 +32,8 @@ class MultipleChoiceQuestion < Question
   end
 
   def next_node_rules
-    next_node_rules_from_options + next_node_rules_from_next_node_ifs
+    next_node_rules_from_options +
+      NextNodeIfExtractor.new(response_variable_name).extract(body)
   end
 
 private
@@ -40,36 +43,67 @@ private
     end
   end
 
-  def next_node_rules_from_next_node_ifs
-    next_node_ifs
-  end
+  class NextNodeIfExtractor
+    attr_reader :response_variable_name
 
-  def next_node_ifs
-    q = Q? {
-      s(:call, nil, :next_node_if,
-        s(:lit, atom % "next_node"),
-        ___ % "predicate_list"
-      )
-    }
-
-    (body / q).map do |match|
-      Rule.new(match["next_node"], *build_predicate(match["predicate_list"]))
+    def initialize(response_variable_name)
+      @response_variable_name = response_variable_name
     end
-  end
 
-  def build_predicate(predicate_sexp)
-    predicate_sexp.map do |predicate|
-      match = {}
-      rw = Q? { s(:call, nil, :responded_with, s(:str, atom % "expected_value")) }
-      vm = Q? { s(:call, nil, :variable_matches,
-        s(:lit, atom % "var_name"),
-        s(:str, atom % "expected_value"))
-      }
-      if rw.satisfy?(predicate, match)
-        Predicate::Equality.new(response_variable_name, match["expected_value"])
-      elsif vm.satisfy?(predicate, match)
-        Predicate::Equality.new(match["var_name"].to_s, match["expected_value"])
+    def extract(body = @body)
+      if body.size == 1 && body.first.node_type == :block
+        extract(body.first.rest)
+      else
+        body.map do |sexp|
+          match = {}
+          if q_next_node.satisfy?(sexp, match)
+            Rule.new(match["next_node"], *build_predicates(match["predicate_list"]))
+          elsif q_on_condition.satisfy?(sexp, match)
+            OnConditionRule.new(
+              build_predicates(match["predicate_list"]).first,
+              extract(match["body"])
+            )
+          else
+            nil
+          end
+        end.compact
       end
+    end
+
+  private
+    def build_predicates(predicate_sexp)
+      predicate_sexp.map do |predicate|
+        match = {}
+        rw = Q? { s(:call, nil, :responded_with, s(:str, atom % "expected_value")) }
+        vm = Q? { s(:call, nil, :variable_matches,
+          s(:lit, atom % "var_name"),
+          s(:str, atom % "expected_value"))
+        }
+        if rw.satisfy?(predicate, match)
+          Predicate::Equality.new(response_variable_name, match["expected_value"])
+        elsif vm.satisfy?(predicate, match)
+          Predicate::Equality.new(match["var_name"].to_s, match["expected_value"])
+        end
+      end
+    end
+
+    def q_next_node
+      Q? {
+        s(:call, nil, :next_node_if,
+          s(:lit, atom % "next_node"),
+          ___ % "predicate_list"
+        )
+      }
+    end
+
+    def q_on_condition
+      Q? {
+        s(:iter,
+          s(:call, nil, :on_condition, ___ % "predicate_list"),
+          s(:args, ___ % "block_args"),
+          ___ % "body"
+        )
+      }
     end
   end
 

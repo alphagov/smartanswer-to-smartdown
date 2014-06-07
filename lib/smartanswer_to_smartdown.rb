@@ -64,8 +64,21 @@ class SmartanswerToSmartdown
     l.join("\n")
   end
 
-  def render_rule(rule)
-    "* #{rule.predicate.variable_name} is '#{rule.predicate.expected_value}' => #{rule.next_node}"
+  def render_rule(rule, indent = "")
+    case rule
+    when OnConditionRule
+      lines = ["* #{render_predicate(rule.predicate)}"] +
+        rule.inner_rules.map {|inner| render_rule(inner, indent + "  ")}
+      lines.join("\n")
+    when Rule
+      "#{indent}* #{render_predicate(rule.predicate)} => #{rule.next_node}"
+    else
+      raise rule
+    end
+  end
+
+  def render_predicate(predicate)
+    "#{predicate.variable_name} is '#{predicate.expected_value}'"
   end
 
 private
