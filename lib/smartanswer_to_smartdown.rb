@@ -2,6 +2,7 @@
 require 'pathname'
 require 'fileutils'
 require 'flow_parser'
+require 'erb'
 
 class SmartanswerToSmartdown
   attr_reader :source_path, :output_path
@@ -26,34 +27,11 @@ class SmartanswerToSmartdown
   end
 
   def generate_coversheet
-    lines = []
-    flow.coversheet.each do |key, value|
-      lines << "#{key}: #{value}"
-    end
-    lines << ""
-    lines << "# #{flow.title}"
-    lines << ""
-    lines << flow.body
-    lines.join("\n")
+    render_template("coversheet", binding)
   end
 
   def generate_question(question)
-    l = []
-    l << "# #{question.title}"
-    l << ""
-    question.options.each do |o|
-      l << "* #{o.name}: #{o.label}"
-    end
-    l << ""
-    l << "-----"
-    l << ""
-    l << "# Next node"
-    l << ""
-    question.next_node_rules.each do |rule|
-      l << render_rule(rule)
-    end
-    l << ""
-    l.join("\n")
+    render_template('multiple_choice_question', binding)
   end
 
   def generate_outcome(outcome)
@@ -89,6 +67,11 @@ class SmartanswerToSmartdown
   end
 
 private
+  def render_template(template_name, binding)
+    path = File.expand_path("templates/#{template_name}.erb", File.dirname(__FILE__))
+    ERB.new(File.read(path), nil, '%').result(binding)
+  end
+
   def write_file(filename, &block)
     FileUtils.mkdir_p(output_path + File.dirname(filename))
     File.open(output_path + filename, "w") do |f|
