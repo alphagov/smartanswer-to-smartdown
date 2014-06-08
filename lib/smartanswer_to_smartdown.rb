@@ -78,7 +78,14 @@ class SmartanswerToSmartdown
   end
 
   def render_predicate(predicate)
-    "#{predicate.variable_name} is '#{predicate.expected_value}'"
+    case predicate
+    when Predicate::Equality
+      "#{predicate.variable_name} is '#{predicate.expected_value}'"
+    when Predicate::SetInclusion
+      "#{predicate.variable_name} in {#{predicate.expected_values.join(" ")}}"
+    else
+      "???"
+    end
   end
 
 private

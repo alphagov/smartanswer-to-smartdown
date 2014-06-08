@@ -92,9 +92,19 @@ RUBY
         it { should eq(Predicate::Equality.new("question", "opt1")) }
       end
 
+      context 'responded_with(%w{})' do
+        let(:predicate) { %{responded_with(%w{a b})} }
+        it { should eq(Predicate::SetInclusion.new("question", %w{a b})) }
+      end
+
       context 'variable_matches predicate' do
         let(:predicate) { %{variable_matches(:my_var, "opt1")} }
         it { should eq(Predicate::Equality.new("my_var", "opt1")) }
+      end
+
+      context 'variable_matches(%w{}) predicate' do
+        let(:predicate) { %{variable_matches(:my_var, %w{a b})} }
+        it { should eq(Predicate::SetInclusion.new("my_var", %w{a b})) }
       end
     end
 

@@ -2,6 +2,7 @@ require "question"
 require "rule"
 require "on_condition_rule"
 require "predicate/equality"
+require "predicate/set_inclusion"
 require "predicate/conjunction"
 
 class MultipleChoiceQuestion < Question
@@ -73,16 +74,36 @@ private
   private
     def build_predicates(predicate_sexp)
       predicate_sexp.map do |predicate|
-        match = {}
         rw = Q? { s(:call, nil, :responded_with, s(:str, atom % "expected_value")) }
+        rwa = Q? { s(:call, nil, :responded_with, s(:array, ___ % "expected_values")) }
         vm = Q? { s(:call, nil, :variable_matches,
           s(:lit, atom % "var_name"),
           s(:str, atom % "expected_value"))
         }
+        vma = Q? {
+          s(:call, nil, :variable_matches,
+            s(:lit, atom % "var_name"),
+            s(:array, ___ % "expected_values")
+          )
+        }
+        match = {}
         if rw.satisfy?(predicate, match)
           Predicate::Equality.new(response_variable_name, match["expected_value"])
+        elsif rwa.satisfy?(predicate, match)
+          Predicate::SetInclusion.new(response_variable_name, convert_atoms(match["expected_values"]))
         elsif vm.satisfy?(predicate, match)
           Predicate::Equality.new(match["var_name"].to_s, match["expected_value"])
+        elsif vma.satisfy?(predicate, match)
+          Predicate::SetInclusion.new(match["var_name"].to_s, convert_atoms(match["expected_values"]))
+        end
+      end
+    end
+
+    def convert_atoms(atom_list)
+      atom_list.map do |a|
+        matches = {}
+        if (Q? { s(:str, atom % "s") }.satisfy?(a, matches))
+          matches['s']
         end
       end
     end
