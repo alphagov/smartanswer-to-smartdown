@@ -1,6 +1,6 @@
 require 'pathname'
 require 'multiple_choice_question'
-require 'flow_parser'
+require 'parser/flow_parser'
 
 describe "parsing a multiple_choice question" do
   def indent(text, num_spaces)
@@ -18,7 +18,7 @@ describe "parsing a multiple_choice question" do
 RUBY
   }
   let(:parser) {
-    FlowParser.new(flow_name, ruby, yaml)
+    Parser::FlowParser.new(flow_name, ruby, yaml)
   }
 
   subject(:question) { parser.questions.first }

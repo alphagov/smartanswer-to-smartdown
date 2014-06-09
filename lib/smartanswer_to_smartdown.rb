@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'pathname'
 require 'fileutils'
-require 'flow_parser'
+require 'parser/flow_parser'
 require 'erb'
 
 class SmartanswerToSmartdown
@@ -80,7 +80,7 @@ private
   end
 
   def flow
-    @flow ||= FlowParser.new(flow_name, flow_ruby, flow_yaml)
+    @flow ||= Parser::FlowParser.new(flow_name, flow_ruby, flow_yaml)
   end
 
   def flow_name

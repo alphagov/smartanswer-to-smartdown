@@ -1,5 +1,5 @@
 require 'pathname'
-require 'flow_parser'
+require 'parser/flow_parser'
 
 describe "FlowParser" do
   let(:fixtures) { Pathname.new("fixtures/unit").expand_path(File.dirname(__FILE__)) }
@@ -8,7 +8,7 @@ describe "FlowParser" do
   let(:flow_yml) { File.read(fixtures + "#{flow_name}.yml") }
 
   subject(:parsed) {
-    FlowParser.parse(flow_name, flow_ruby, flow_yml)
+    Parser::FlowParser.parse(flow_name, flow_ruby, flow_yml)
   }
 
   it "extracts the coversheet metadata" do
