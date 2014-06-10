@@ -31,7 +31,14 @@ class SmartanswerToSmartdown
   end
 
   def generate_question(question)
-    render_template('multiple_choice_question', binding)
+    template_name = underscore(question.class.to_s)
+    render_template(template_name, binding)
+  end
+
+  def underscore(camel_case_text)
+    camel_case_text.gsub(/([a-z]|^)([A-Z])/) do
+      $1.empty? ? $2.downcase : "#{$1}_#{$2.downcase}"
+    end
   end
 
   def generate_outcome(outcome)

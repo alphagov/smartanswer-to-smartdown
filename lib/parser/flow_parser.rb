@@ -54,16 +54,6 @@ module Parser
     end
 
   private
-    QUESTION_METHODS = [
-      :multiple_choice,
-      :country_select,
-      :date_question,
-      :optional_date,
-      :value_question,
-      :money_question,
-      :salary_question,
-      :checkbox_question
-    ]
 
     def find(query)
       parse_tree / query
@@ -79,32 +69,18 @@ module Parser
     end
 
     def extract_questions
-      (parse_tree / question_query).map { |match| build_question(match) }
-    end
-
-    def build_question(match)
-      question_type = match["question_method"]
-      question_args = match["question_args"]
-      question_body = match["body"]
-      case question_type
-      when :multiple_choice
-        MultipleChoiceQuestion.new(translations, question_args, question_body)
-      else
-        Question.new(translations, question_args, question_body)
+      Question.match_all(parse_tree) do |question_type, question_sexp|
+        case question_type
+        when :multiple_choice
+          MultipleChoiceQuestion.new(translations, question_sexp)
+        else
+          Question.new(translations, question_sexp)
+        end
       end
     end
 
     def build_outcome(match)
 
-    end
-
-    def question_query
-      Q? {
-        s(:iter,
-          s(:call, nil, m(%r{#{QUESTION_METHODS.join("|")}}) % 'question_method', ___ % "question_args"),
-          s(:args, ___ % "block_args"),
-          ___ % "body")
-      }
     end
 
     def translations

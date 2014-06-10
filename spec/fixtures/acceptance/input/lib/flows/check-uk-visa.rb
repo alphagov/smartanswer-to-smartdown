@@ -13,6 +13,9 @@ multiple_choice :purpose_of_visit? do
   end
 end
 
+date_question :what_date? do
+end
+
 outcome :outcome_work
 outcome :outcome_study
 outcome :outcome_tourism
