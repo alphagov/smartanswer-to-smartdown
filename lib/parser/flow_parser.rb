@@ -69,9 +69,8 @@ module Parser
     end
 
     def transform
-      @transformed ||= Parser::TransformChain.new(
-        Parser::Question.new(translations).transform,
-        Parser::OutcomeTransform.new(translations)
+      @transformed ||= (
+        Parser::Question.new(translations) << Parser::OutcomeTransform.new(translations)
       ).apply(parse_tree)
     end
 

@@ -1,6 +1,7 @@
 require 'parser/question_transform'
 require 'model/rule'
 require 'model/option'
+require 'model/multiple_choice_question'
 
 module Parser
   class MultipleChoiceQuestionTransform < QuestionTransform

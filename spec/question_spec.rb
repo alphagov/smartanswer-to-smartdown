@@ -1,6 +1,7 @@
 require 'pathname'
 require 'parser/question'
 require 'parser/translations'
+require 'model/question'
 
 describe Parser::Question do
   let(:flow_name) { "example" }
