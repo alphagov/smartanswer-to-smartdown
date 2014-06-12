@@ -1,9 +1,9 @@
 require 'pathname'
-require 'parser/multiple_choice_question_builder'
 require 'parser/translations'
+require 'parser/question'
 require 'model/rule'
 
-describe Parser::MultipleChoiceQuestionBuilder do
+describe "parsing multiple choice question" do
   let(:flow_name) { "example" }
   let(:translation_data) { nil }
   let(:translation_yaml) {
@@ -11,19 +11,11 @@ describe Parser::MultipleChoiceQuestionBuilder do
   }
   let(:translations) { Parser::Translations.new(flow_name, translation_yaml) }
 
-  let(:body_ruby) { %Q{ option :opt1 } }
-  let(:body_sexp) { parse_ruby(body_ruby) }
+  let(:ruby) { %Q{ multiple_choice(:question) {option :opt1} } }
+  let(:sexp) { parse_ruby(ruby) }
 
-  let(:match) {
-    {
-      'type' => :multiple_choice,
-      'name' => "question",
-      'args' => s(),
-      'body' => body_sexp
-    }
-  }
-  let(:builder) { described_class.new(translations) }
-  subject(:question) { builder.build(match) }
+  let(:parser) { Parser::Question.new(translations) }
+  subject(:question) { parser.parse(sexp) }
 
   let(:option_label) { "LABEL1" }
 

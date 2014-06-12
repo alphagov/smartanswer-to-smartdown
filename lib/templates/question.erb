@@ -6,6 +6,6 @@ Unknown question type!
 
 # Next node
 
-% question.next_node_rules.each do |rule|
-<%= render_rule(rule) %>
+% (question.next_node_rules||[]).each do |rule|
+<%= render_rule(question, rule) %>
 % end

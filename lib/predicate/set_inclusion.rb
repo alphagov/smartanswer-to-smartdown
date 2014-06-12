@@ -1,4 +1,3 @@
 module Predicate
-  class SetInclusion < Struct.new(:variable_name, :expected_values)
-  end
+  SetInclusion = Struct.new(:variable_name, :expected_values)
 end

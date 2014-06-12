@@ -52,12 +52,12 @@ describe "FlowParser" do
   describe "extracting a multiple choice question node" do
     subject(:question) { parsed.questions.first }
 
-    it { should be_a(MultipleChoiceQuestion) }
+    it { should be_a(Model::MultipleChoiceQuestion) }
 
     it "should list options with name and label" do
       expect(question.options).to eq([
-        MultipleChoiceQuestion::Option.new(:work, "Work or business"),
-        MultipleChoiceQuestion::Option.new(:study, "Study", :outcome_study)
+        Model::Option.new(:work, "Work or business"),
+        Model::Option.new(:study, "Study", :outcome_study)
       ])
     end
 

@@ -1,7 +1,7 @@
 require 'sexp_path_dsl'
 
 module Model
-  Question = Struct.new(:type, :name, :args, :body) do
+  Question = Struct.new(:type, :name, :args, :body, :next_node_rules) do
     attr_reader :translations
 
     def initialize(*args, translations)

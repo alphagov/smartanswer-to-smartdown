@@ -40,24 +40,9 @@ describe Parser::Question do
         it { should eq [:a, :b] }
       end
     end
-
-    context "a multiple choice question" do
-      let(:ruby) { "multiple_choice(:my_question) {}" }
-      let(:multiple_choice_parser) { double("multiple_choice_parser") }
-      let(:expected_match) {
-        {"type"=>:multiple_choice, "name"=>:my_question, "args"=>s(), "block_args"=>s(), "body"=>s()}
-      }
-
-      it "should process the question using Parser::MultipleChoiceQuestionBuilder" do
-        expect(Parser::MultipleChoiceQuestionBuilder).to receive(:new).with(translations).and_return(multiple_choice_parser)
-        expect(multiple_choice_parser).to receive(:build).with(expected_match)
-        question_parser.parse(sexp)
-      end
-    end
   end
 
   [
-    :multiple_choice,
     :country_select,
     :date_question,
     :optional_date,
@@ -69,7 +54,7 @@ describe Parser::Question do
     context question_type do
       let(:ruby) { "#{question_type}(:#{question_name}, :arg1) { do_stuff }" }
 
-      subject(:question) { question_parser.parse(sexp).first }
+      subject(:question) { question_parser.parse(sexp) }
 
       it "should extract question type" do
         expect(question.type).to eq(question_type)

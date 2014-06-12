@@ -2,9 +2,9 @@ require 'ruby_parser'
 require 'sexp_path'
 
 require 'parser/translations'
+require 'parser/question'
+require 'parser/outcome_transform'
 require 'sexp_path_dsl'
-require 'multiple_choice_question'
-require 'outcome'
 
 module Parser
   class FlowParser
@@ -21,11 +21,11 @@ module Parser
     end
 
     def questions
-      @questions ||= extract_questions
+      transform.select {|n| n.is_a?(Model::Question) }
     end
 
     def outcomes
-      @outcomes ||= extract_outcomes
+      transform.select {|n| n.is_a?(Model::Outcome) }
     end
 
     def coversheet
@@ -68,36 +68,15 @@ module Parser
       @parse_tree ||= RubyParser.for_current_ruby.parse(@ruby)
     end
 
-    def extract_questions
-      Question.match_all(parse_tree) do |question_type, question_sexp|
-        case question_type
-        when :multiple_choice
-          MultipleChoiceQuestion.new(translations, question_sexp)
-        else
-          Question.new(translations, question_sexp)
-        end
-      end
-    end
-
-    def build_outcome(match)
-
+    def transform
+      @transformed ||= Parser::TransformChain.new(
+        Parser::Question.new(translations).transform,
+        Parser::OutcomeTransform.new(translations)
+      ).apply(parse_tree)
     end
 
     def translations
       @translations ||= Translations.new(@name, @yaml)
     end
-
-    def outcome_query
-      Q? {
-        s(:call, nil, :outcome, s(:lit, atom % "outcome_name"))
-      }
-    end
-
-    def extract_outcomes
-      (parse_tree / outcome_query).map do |match|
-        Outcome.new(translations, match["outcome_name"])
-      end
-    end
-
   end
 end

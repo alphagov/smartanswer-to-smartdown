@@ -31,7 +31,7 @@ class SmartanswerToSmartdown
   end
 
   def generate_question(question)
-    template_name = underscore(question.class.to_s)
+    template_name = underscore(question.class.to_s.split("::").last)
     render_template(template_name, binding)
   end
 
@@ -49,25 +49,25 @@ class SmartanswerToSmartdown
     l.join("\n")
   end
 
-  def render_rule(rule, indent = "")
+  def render_rule(question, rule, indent = "")
     case rule
-    when OnConditionRule
-      lines = ["* #{render_predicate(rule.predicate)}"] +
-        rule.inner_rules.map {|inner| render_rule(inner, indent + "  ")}
+    when Model::OnConditionRule
+      lines = ["* #{render_predicate(question, rule.predicate)}"] +
+        rule.inner_rules.map {|inner| render_rule(question, inner, indent + "  ")}
       lines.join("\n")
-    when Rule
-      "#{indent}* #{render_predicate(rule.predicate)} => #{rule.next_node}"
+    when Model::Rule
+      "#{indent}* #{render_predicate(question, rule.predicate)} => #{rule.next_node}"
     else
       raise rule
     end
   end
 
-  def render_predicate(predicate)
+  def render_predicate(question, predicate)
     case predicate
     when Predicate::Equality
-      "#{predicate.variable_name} is '#{predicate.expected_value}'"
+      "#{predicate.variable_name || question.response_variable_name} is '#{predicate.expected_value}'"
     when Predicate::SetInclusion
-      "#{predicate.variable_name} in {#{predicate.expected_values.join(" ")}}"
+      "#{predicate.variable_name || question.response_variable_name} in {#{predicate.expected_values.join(" ")}}"
     else
       "???"
     end
