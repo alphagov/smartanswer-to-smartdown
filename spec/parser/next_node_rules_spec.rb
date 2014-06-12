@@ -10,6 +10,22 @@ describe "parsing next node rules" do
   subject(:next_node_rules) { question.next_node_rules }
 
   describe "extracting next node rules" do
+    [
+      :multiple_choice,
+      :country_select,
+      :date_question,
+      :optional_date,
+      :value_question,
+      :money_question,
+      :salary_question,
+      :checkbox_question
+    ].each do |question_type|
+      context "#{question_type} question" do
+        let(:ruby) { %Q[#{question_type}(:question) { next_node_if(:outcome, responded_with("yes")) }] }
+        it { should eq([Model::Rule.new(:outcome, Predicate::Equality.new(nil, "yes"))]) }
+      end
+    end
+
     context "rule defined using next_node_if" do
       let(:ruby) { %Q[multiple_choice(:question) { next_node_if(:outcome, #{predicate}) }] }
 

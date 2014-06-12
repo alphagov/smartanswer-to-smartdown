@@ -37,13 +37,7 @@ module Parser
     end
 
     def next_node_rules
-      next_node_rules_from_options + next_node_rules_from_rules
-    end
-
-    def next_node_rules_from_rules
-      sexp_select(@match_data['body']) do |elem|
-        elem.is_a?(Model::Rule) || elem.is_a?(Model::OnConditionRule)
-      end
+      next_node_rules_from_options + super
     end
 
   private

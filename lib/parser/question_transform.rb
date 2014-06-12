@@ -40,12 +40,19 @@ module Parser
         @match_data['name'],
         @match_data['args'],
         @match_data['body'],
+        next_node_rules,
         translations
       )
     end
 
     def response_variable_name
       @match_data['name'].to_s.gsub(/\?$/, '')
+    end
+
+    def next_node_rules
+      sexp_select(@match_data['body']) do |elem|
+        elem.is_a?(Model::Rule) || elem.is_a?(Model::OnConditionRule)
+      end
     end
   end
 end
