@@ -20,8 +20,8 @@ module Parser
 
   class Transform
     def match?(sexp)
-      @match_data = {}
-      pattern.satisfy?(sexp, @match_data)
+      @match_data = pattern.satisfy?(sexp)
+      !! @match_data
     end
 
     def pattern
@@ -40,7 +40,7 @@ module Parser
       TransformChain.new(self, other)
     end
 
-    def walk_sexp(sexp, &block)
+    def walk_sexp(sexp, stack = [], &block)
       sexp.each do |sub_sexp|
         walk_sexp(sub_sexp, &block) if sub_sexp.is_a?(Sexp)
         block.call(sub_sexp)

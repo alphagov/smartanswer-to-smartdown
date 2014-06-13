@@ -13,7 +13,7 @@ module Parser
     end
 
     def transform(sexp, match)
-      Model::Outcome.new(translations, match["outcome_name"])
+      Model::Outcome.new(match["outcome_name"], translations)
     end
   end
 end

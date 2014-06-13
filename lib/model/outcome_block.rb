@@ -1,5 +1,5 @@
 module Model
-  Outcome = Struct.new(:name, :translations) do
+  OutcomeBlock = Struct.new(:name, :translations, :precalculations) do
     def title
       translations.get("#{name}.title")
     end
