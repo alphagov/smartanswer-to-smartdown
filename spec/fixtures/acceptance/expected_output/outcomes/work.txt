@@ -2,7 +2,7 @@
 
 The visa you apply for depends on your circumstances.
 
-%{if_turkey}
+You may work here, yay![^1]
 
 ###Skilled workers
 
@@ -41,9 +41,5 @@ A ‘high value worker’ visa may be suitable if you’re:
 
 You may be eligible for a [UK ancestry visa](/ancestry-visa) if one of your grandparents was born in the UK.
 
-###Other workers
 
-You can also apply as a:
-
-- [domestic worker in a private household](/domestic-workers-in-a-private-household-visa)
-- [representative of an overseas business](/representative-overseas-business)
+[^1]: purpose_of_visit == "work_in_turkey"

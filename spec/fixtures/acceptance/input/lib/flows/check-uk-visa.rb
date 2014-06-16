@@ -13,6 +13,16 @@ multiple_choice :purpose_of_visit? do
   end
 end
 
-outcome :outcome_work
+outcome :outcome_work do
+  precalculate :if_turkey do
+    phrases = PhraseList.new
+
+    if purpose_of_visit == "work_in_turkey"
+      phrases << :you_may_work
+    end
+    phrases
+  end
+end
+
 outcome :outcome_study
 outcome :outcome_tourism
