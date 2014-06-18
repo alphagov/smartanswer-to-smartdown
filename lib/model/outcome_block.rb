@@ -48,7 +48,7 @@ module Model
     end
 
     def strip_trailing_newline(text)
-      text.gsub(/\n+\Z/, '')
+      text.to_s.gsub(/\n+\Z/, '')
     end
 
     def in_paragraphs(markdown_text)
@@ -73,7 +73,8 @@ module Model
     end
 
     def precalculation(name)
-      precalculations.find {|p| p.name.to_s == name.to_s} || Precalculation.new(name, [])
+      precalculations.find {|p|
+        p.name.to_s == name.to_s} || Precalculation.new(name, [])
     end
   end
 end

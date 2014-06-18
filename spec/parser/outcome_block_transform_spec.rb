@@ -93,5 +93,30 @@ describe Parser::OutcomeBlockTransform do
         )
       end
     end
+
+
+    context "the phraselist has an element with a predicate" do
+      let(:predicate_sexp) {
+        parse_ruby("predicate_name")
+      }
+      let(:ruby) { "outcome(:my_outcome){
+        precalculate(:precalculation){
+          phrases = PhraseList.new
+          if predicate_name
+            phrases << :phrase
+          end
+          if predicate_name2
+            phrases << :phrase2
+          end
+          phrases
+        }
+      }"}
+
+      it "generates a precalculation with a conditional phrase model with a predicate" do
+        expect(transformed.precalculations.first.conditional_phrases).to eq(
+          [Model::ConditionalPhrase.new(:phrase, [Predicate::Raw.new(predicate_sexp)])]
+        )
+      end
+    end
   end
 end
