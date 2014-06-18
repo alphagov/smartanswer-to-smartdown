@@ -5,6 +5,10 @@ require 'parser/translations'
 require 'parser/question'
 require 'parser/outcome_block_transform'
 require 'parser/outcome_transform'
+require 'parser/phrase_transform'
+require 'parser/conditional_transform'
+require 'parser/outer_block_remover'
+require 'parser/precalculation_transform'
 require 'sexp_path_dsl'
 
 module Parser
@@ -76,8 +80,12 @@ module Parser
     def transform
       @transformed ||= (
         Parser::Question.new(translations) <<
+          Parser::PhraseTransform.new <<
+          Parser::ConditionalTransform.new <<
+          Parser::PrecalculationTransform.new <<
           Parser::OutcomeBlockTransform.new(translations) <<
-          Parser::OutcomeTransform.new(translations)
+          Parser::OutcomeTransform.new(translations) <<
+          Parser::OuterBlockRemover.new
       ).apply(parse_tree)
     end
 

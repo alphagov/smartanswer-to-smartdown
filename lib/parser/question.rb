@@ -12,8 +12,7 @@ module Parser
         NextNodeRulesTransform.new,
         OptionTransform.new(translations),
         QuestionTransform.new(translations),
-        MultipleChoiceQuestionTransform.new(translations),
-        OuterBlockRemover.new
+        MultipleChoiceQuestionTransform.new(translations)
       )
     end
 

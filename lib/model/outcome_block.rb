@@ -40,11 +40,11 @@ module Model
     def render_predicate_definitions
       "\n" + @predicates.map.with_index do |predicate, i|
         footnote_reference(predicate) + ": " + unparse(predicate)
-      end.join("\n")
+      end.join("\n") + "\n"
     end
 
-    def unparse(predicate_sexp)
-      Parser::Unparser.new.apply(predicate_sexp)
+    def unparse(predicate)
+      Parser::Unparser.new.apply(predicate.sexp)
     end
 
     def strip_trailing_newline(text)
