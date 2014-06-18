@@ -75,4 +75,10 @@ module Parser
       s(*array)
     end
   end
+
+  class SexpTransform < Transform
+    def match?(sexp)
+      sexp.is_a?(Sexp) && sexp_match?(sexp)
+    end
+  end
 end

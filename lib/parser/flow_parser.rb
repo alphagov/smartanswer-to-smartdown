@@ -3,6 +3,7 @@ require 'sexp_path'
 
 require 'parser/translations'
 require 'parser/question'
+require 'parser/outcome_block_transform'
 require 'parser/outcome_transform'
 require 'sexp_path_dsl'
 
@@ -25,7 +26,11 @@ module Parser
     end
 
     def outcomes
-      transform.select {|n| n.is_a?(Model::Outcome) }
+      transform.select {|n|
+        [Model::Outcome, Model::OutcomeBlock].any? { |k|
+          n.is_a?(k)
+        }
+      }
     end
 
     def coversheet
@@ -70,7 +75,9 @@ module Parser
 
     def transform
       @transformed ||= (
-        Parser::Question.new(translations) << Parser::OutcomeTransform.new(translations)
+        Parser::Question.new(translations) <<
+          Parser::OutcomeBlockTransform.new(translations) <<
+          Parser::OutcomeTransform.new(translations)
       ).apply(parse_tree)
     end
 
