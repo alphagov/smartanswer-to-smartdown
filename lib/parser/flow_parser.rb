@@ -2,11 +2,10 @@ require 'ruby_parser'
 require 'sexp_path'
 
 require 'parser/translations'
+require 'parser/sexp_walker'
 require 'parser/question'
-require 'parser/outcome_block_transform'
+require 'parser/outcome_block_transform_chain'
 require 'parser/outcome_transform'
-require 'parser/phrase_transform'
-require 'parser/conditional_transform'
 require 'parser/outer_block_remover'
 require 'parser/precalculation_transform'
 require 'sexp_path_dsl'
@@ -26,15 +25,11 @@ module Parser
     end
 
     def questions
-      transform.select {|n| n.is_a?(Model::Question) }
+      SexpWalker.select_type(transform, Model::Question)
     end
 
     def outcomes
-      transform.select {|n|
-        [Model::Outcome, Model::OutcomeBlock].any? { |k|
-          n.is_a?(k)
-        }
-      }
+      SexpWalker.select_type(transform, Model::Outcome, Model::OutcomeBlock)
     end
 
     def coversheet
@@ -80,12 +75,8 @@ module Parser
     def transform
       @transformed ||= (
         Parser::Question.new(translations) <<
-          Parser::PhraseTransform.new <<
-          Parser::ConditionalTransform.new <<
-          Parser::PrecalculationTransform.new <<
-          Parser::OutcomeBlockTransform.new(translations) <<
-          Parser::OutcomeTransform.new(translations) <<
-          Parser::OuterBlockRemover.new
+          Parser::OutcomeBlockTransformChain.new(translations) <<
+          Parser::OutcomeTransform.new(translations)
       ).apply(parse_tree)
     end
 

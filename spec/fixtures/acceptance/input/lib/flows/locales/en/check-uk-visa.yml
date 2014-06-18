@@ -28,9 +28,6 @@ en-GB:
 
           ^If you’re studying an English language course for less than 11 months, you can apply for a [study visit](/study-visit-visa) visa.^
 
-      you_may_work: |
-        You may work here, yay!
-
       outcome_work:
         title: You’ll need a visa to come to the UK to work or do business
         body: |
@@ -73,3 +70,10 @@ en-GB:
 
           You may be eligible for a [UK ancestry visa](/ancestry-visa) if one of your grandparents was born in the UK.
 
+
+      phrases:
+        you_may_work: |
+          You may work here, yay!
+
+        you_may_not_work: |
+          Sad times, you may not work here :-/

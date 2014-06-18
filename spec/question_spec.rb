@@ -1,6 +1,7 @@
 require 'pathname'
 require 'parser/question'
 require 'parser/translations'
+require 'parser/sexp_walker'
 require 'model/question'
 
 describe Parser::Question do
@@ -25,7 +26,9 @@ describe Parser::Question do
         RUBY
       }
 
-      subject(:question) { question_parser.parse(sexp) }
+      subject(:question) {
+        Parser::SexpWalker.select_type(question_parser.parse(sexp), Model::Question)
+      }
 
       it "should extract the two questions" do
         should match([Model::Question, Model::Question])

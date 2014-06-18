@@ -39,4 +39,4 @@ A ‘high value worker’ visa may be suitable if you’re:
 
 You may be eligible for a [UK ancestry visa](/ancestry-visa) if one of your grandparents was born in the UK.
 
-[^1]: purpose_of_visit == 'work_in_turkey'
+[^1]: (purpose_of_visit == "work_in_turkey")
