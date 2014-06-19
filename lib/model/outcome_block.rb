@@ -24,7 +24,7 @@ module Model
       body.gsub(/%{([^}]+)}/) do
         precalculation($1).conditional_phrases.map do |conditional_phrase|
           render_conditional_phrase(conditional_phrase)
-        end.join("\n")
+        end.join("\n\n")
       end + render_predicate_definitions
     end
 
