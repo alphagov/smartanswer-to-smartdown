@@ -1,4 +1,4 @@
-require 'ruby2ruby'
+require 'parser/unparser'
 
 module Model
   OutcomeBlock = Struct.new(:name, :translations, :precalculations) do
@@ -44,7 +44,7 @@ module Model
     end
 
     def unparse(predicate)
-      Ruby2Ruby.new.process(predicate.sexp)
+      Parser::Unparser.unparse(predicate.sexp)
     end
 
     def strip_trailing_newline(text)
