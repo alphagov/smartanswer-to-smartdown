@@ -2,7 +2,10 @@
 
 
 
+
+
 Contact your local embassy or consulate to make an appointment.[^2]
+
 
 
 [^1]: data_query.ss_clickbook_countries?(ceremony_country)
