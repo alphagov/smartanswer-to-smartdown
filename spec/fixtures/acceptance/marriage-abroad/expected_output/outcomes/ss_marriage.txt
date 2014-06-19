@@ -1,0 +1,9 @@
+# %{ss_title} in %{country_name_lowercase_prefix}
+
+
+
+Contact your local embassy or consulate to make an appointment.[^2]
+
+
+[^1]: data_query.ss_clickbook_countries?(ceremony_country)
+[^2]: (not data_query.ss_clickbook_countries?(ceremony_country))

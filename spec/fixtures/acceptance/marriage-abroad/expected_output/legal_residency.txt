@@ -1,0 +1,9 @@
+# Do you live in the UK?
+
+* uk: Yes
+* other: No
+
+-----
+
+# Next node
+

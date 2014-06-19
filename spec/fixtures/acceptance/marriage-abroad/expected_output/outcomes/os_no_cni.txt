@@ -1,0 +1,39 @@
+# Marriage in %{country_name_lowercase_prefix}
+
+%{country_name_uppercase_prefix} is one of the Dutch Caribbean islands.[^1]
+Contact the [Dutch Embassy in the UK](http://www.netherlands-embassy.org.uk/about/index.php?i=121) before making any plans to find out about local marriage laws, including what documents you’ll need.[^2][^1]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^2][^1]
+Contact the relevant local authorities in %{country_name_lowercase_prefix} to find out about local marriage laws, including what documents you’ll need.[^3][^4][^1]
+Contact your nearest Dutch embassy or consulate before making any plans to find out about local marriage laws, including what documents you’ll need.[^5][^6][^4][^1]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^5][^6][^4][^1]
+Contact your [nearest embassy or consulate](/government/publications/foreign-embassies-in-the-uk) representing %{country_name_lowercase_prefix} before making any plans to find out about local marriage laws, including what documents you’ll need.[^2][^7]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^2][^7]
+Contact the relevant local authorities in %{country_name_lowercase_prefix} to find out about local marriage laws, including what documents you’ll need.[^3][^4][^7]
+Contact your nearest embassy or consulate representing %{country_name_lowercase_prefix} to find out about local marriage laws, including what documents you’ll need.[^5][^6][^4][^7]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^5][^6][^4][^7]
+^You should [get legal advice](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) before making any plans.^
+You normally have to pay fees for consular services in the local currency - these are shown in the list of [consular fees for %{country_name_lowercase_prefix}](/government/publications/france-consular-fees).[^8][^9]
+You normally have to pay fees for consular services in the local currency - these are shown in the list of [consular fees for %{country_name_lowercase_prefix}](/government/publications/%{ceremony_country}-consular-fees).[^10][^9]
+You can pay by cash or credit card, but not by personal cheque.[^9]
+##Naturalisation of your partner if they move to the UK[^11]
+
+Your partner can apply to [become a British citizen](/becoming-a-british-citizen/if-your-spouse-is-a-british-citizen) once they've lived in the UK for 3 years.[^11]
+
+*[GRO]:General Register Office
+*[FCO]:Foreign &amp; Commonwealth Office
+
+[^1]: data_query.dutch_caribbean_islands?(ceremony_country)
+[^2]: ["uk"].include?(resident_of)
+[^3]: (ceremony_country == residency_country)
+[^4]: (not ["uk"].include?(resident_of))
+[^5]: (ceremony_country != residency_country) and ["uk"].exclude?(resident_of)
+[^6]: (not (ceremony_country == residency_country))
+[^7]: (not data_query.dutch_caribbean_islands?(ceremony_country))
+[^8]: ["monaco"].include?(ceremony_country)
+[^9]: (not data_query.countries_without_consular_facilities?(ceremony_country))
+[^10]: (not ["monaco"].include?(ceremony_country))
+[^11]: ["partner_british"].exclude?(partner_nationality)

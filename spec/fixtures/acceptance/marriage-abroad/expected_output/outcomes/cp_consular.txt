@@ -1,0 +1,87 @@
+# Civil partnership in %{country_name_lowercase_prefix}
+
+You may be able to register a civil partnership at the British embassy or consulate in %{country_name_lowercase_prefix}.
+%However, you can’t enter into a civil partnership with a Vietnamese national.%[^1][^2]
+[Book an appointment online](https://www.clickbook.net/dev/bc.nsf/sub/britishembassyhanoi).[^2]
+%However, they can’t register a civil partnership between a British national and a national of %{country_name_lowercase_prefix}.%[^3][^4]
+Contact them to make an appointment:[^5][^6][^4]
+
+- [Tokyo](https://britishembassytokyo.clickbook.net/sub/britishembassytokyo) (if you live in Eastern Japan)
+- [Osaka](https://ukconsulateosaka.clickbook.net/sub/ukconsulateosaka) (if you live in Western Japan)[^5][^6][^4]
+
+###What documents you’ll need[^5][^6][^4]
+
+You’ll need proof that you’ve been resident in the area covered by the embassy or consulate for at least 7 days, like an employer’s letter, passport or a bank statement.[^5][^6][^4]
+
+You’ll both need your original passports. If either of you have been divorced, widowed or in a civil partnership before, you’ll also need:[^5][^6][^4]
+
+- a [decree absolute or final order](/copy-decree-absolute-final-order), or
+- the [death certificate](/order-copy-birth-death-marriage-certificate/)[^5][^6][^4]
+Contact them to make an appointment:[^7][^6][^4]
++[data_partial:clickbooks:clickbook_data][^8][^9][^7][^6][^4]
+[Book an appointment online](%{clickbook_data})[^10][^9][^7][^6][^4]
++[data_partial:overseas_passports_embassies:overseas_passports_embassies][^11]
+###What documents you’ll need[^7]
+
+You’ll need proof that you’ve been resident in the area covered by the embassy or consulate for at least 7 days, like an employer’s letter or a bank statement.[^7]
+
+You’ll both need your original passports. If either of you have been divorced, widowed or in a civil partnership before, you’ll also need:[^7]
+
+- a [decree absolute or final order](/copy-decree-absolute-final-order), or
+- the [death certificate](/order-copy-birth-death-marriage-certificate/)[^7]
+Your partner will also need either:[^12]
+
+- a ‘certificate of no impediment’ (CNI) or similar document to prove they’re allowed to enter into a civil partnership from their national authorities
+- an official letter from the local authorities in the country where they’re resident confirming that they’re single[^12]
+
+^Any foreign documents may need to be '[legalised](/get-document-legalised)' (certified as genuine) in the country they were issued (or that country’s embassy in %{country_name_lowercase_prefix}), and [translated into English](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers).^[^12]
+###What you need to do
+
+Once you’ve made your appointment, the embassy or consulate will give you:
+
+- a notice of registration
+- a declaration that you and your partner will need to swear, stating that you’re legally entitled to enter into a civil partnership
+
+Once you’ve submitted these and paid the registration fee (see below), the embassy or consulate will display your notice publicly for 14 days.
+
+As long as nobody has registered an objection after this time, the registration officer can then register your partnership any time until 3 months after the date you gave notice.
+
+You’ll need to provide two witnesses and pay a fee to register your civil partnership. You’ll need to pay an additional fee for your civil partnership certificate (see below).
+##Naturalisation of your partner if they move to the UK[^12]
+
+Your partner can apply to [become a British citizen](/becoming-a-british-citizen/if-your-spouse-is-a-british-citizen) once they've lived in the UK for 3 years.[^12]
+##Fees[^13]
+
+Service | Fee
+-|-
+Affidavit for marriage | £55[^13]
+##Fees[^14]
+
+Service | Fee
+-|-
+Receiving a notice of registration | £65
+Registering a civil partnership | £140
+Issuing a civil partnership certificate | £65[^14]
+
+You normally have to pay fees for consular services in the local currency - these are shown in the list of [consular fees for %{ceremony_country_name}](/government/publications/%{ceremony_country}-consular-fees).[^14]
+^You can only pay by cash in %{country_name_lowercase_prefix}. This must be in the local currency.^[^15]
+You can pay by cash or credit card, but not by personal cheque.[^16]
+
+*[CNI]:certificate of no impediment
+
+[^1]: ["partner_local"].include?(partner_nationality)
+[^2]: ["vietnam"].include?(ceremony_country)
+[^3]: ["croatia", "bulgaria"].include?(ceremony_country) and ["partner_local"].include?(partner_nationality)
+[^4]: (not ["vietnam"].include?(ceremony_country))
+[^5]: ["japan"].include?(ceremony_country)
+[^6]: (not (["croatia", "bulgaria"].include?(ceremony_country) and ["partner_local"].include?(partner_nationality)))
+[^7]: (not ["japan"].include?(ceremony_country))
+[^8]: multiple_clickbooks
+[^9]: reg_data_query.clickbook(ceremony_country)
+[^10]: (not multiple_clickbooks)
+[^11]: (not reg_data_query.clickbook(ceremony_country))
+[^12]: ["partner_british"].exclude?(partner_nationality)
+[^13]: ["vietnam", "thailand", "south-korea"].include?(ceremony_country)
+[^14]: (not ["vietnam", "thailand", "south-korea"].include?(ceremony_country))
+[^15]: ["cambodia", "latvia"].include?(ceremony_country)
+[^16]: (not ["cambodia", "latvia"].include?(ceremony_country))

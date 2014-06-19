@@ -1,0 +1,58 @@
+# Civil partnership in %{country_name_lowercase_prefix}
+
+
+Same-sex relationships in Canada that are recognised as civil partnerships under British law are known as:[^2][^3]
+
+- marriage
+- 'union de fait', or 'common-law relationship' (in Manitoba)
+- 'domestic partnership' (in Nova Scotia)
+- 'union civile', or 'civil union' (in Quebec)[^2][^3]
+Same-sex relationships in New Zealand that are recognised as civil partnerships under British law are known as 'civil union'.[^4][^5][^3]
+Same-sex relationships in South Africa that are recognised as civil partnerships under British law are known as:[^6][^7][^5][^3]
+
+- marriage
+- civil partnership[^6][^7][^5][^3]
+
+Contact the [High Commission of %{country_name_lowercase_prefix}](/government/publications/foreign-embassies-in-the-uk) to find out about local laws, including what documents you’ll need.[^8]
+
+^You should [get legal advice](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) and check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}) before making any plans.^[^8]
+Contact the relevant local authorities to find out about local laws, including what documents you’ll need.[^9][^10]
+
+You should also [get legal advice](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) before making any plans.[^9][^10]
+Contact your nearest high commission, embassy or consulate of %{country_name_lowercase_prefix} before making any plans to find out about local laws, including what documents you’ll need.[^11][^12][^10]
+
+^You should [get legal advice](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) and check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}) before making any plans.^[^11][^12][^10]
+
+
+Your Australian partner will also need a Single Status Certificate issued by state or territory authorities.[^13][^1]
+Your partner will also need either:[^14][^15][^1]
+
+- a ‘certificate of no impediment’ (CNI) or similar document to prove they’re allowed to enter into a civil partnership from their national authorities
+- a Single Status Certificate issued by state or territory authorities, if they’ve been resident in Australia for at least 21 days[^14][^15][^1]
+
++[data_partial:overseas_passports_embassies:overseas_passports_embassies][^16]
+##Naturalisation of your partner if they move to the UK[^17]
+
+Your partner can apply to [become a British citizen](/becoming-a-british-citizen/if-your-spouse-is-a-british-citizen) once they've lived in the UK for 3 years.[^17]
+
+
+*[GRO]:General Register Office
+*[FCO]:Foreign &amp; Commonwealth Office
+
+[^1]: ["australia"].include?(ceremony_country)
+[^2]: ["canada"].include?(ceremony_country)
+[^3]: (not ["australia"].include?(ceremony_country))
+[^4]: ["new-zealand"].include?(ceremony_country)
+[^5]: (not ["canada"].include?(ceremony_country))
+[^6]: ["south-africa"].include?(ceremony_country)
+[^7]: (not ["new-zealand"].include?(ceremony_country))
+[^8]: ["uk"].include?(resident_of)
+[^9]: (ceremony_country == residency_country)
+[^10]: (not ["uk"].include?(resident_of))
+[^11]: (ceremony_country != residency_country) and ["uk"].exclude?(resident_of)
+[^12]: (not (ceremony_country == residency_country))
+[^13]: ["partner_local"].include?(partner_nationality)
+[^14]: ["partner_other"].include?(partner_nationality)
+[^15]: (not ["partner_local"].include?(partner_nationality))
+[^16]: ["australia"].exclude?(ceremony_country)
+[^17]: ["partner_british"].exclude?(partner_nationality)

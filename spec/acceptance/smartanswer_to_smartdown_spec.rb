@@ -36,16 +36,31 @@ describe "smartanswer-to-smartdown" do
 
   end
 
-  it "reads a smartanswer, parses it and spits out files" do
-    sample_dir = path('spec/fixtures/acceptance')
+  let(:sample_dir) { path('spec/fixtures/acceptance') }
+
+  before(:each) do
     Bundler.with_clean_env do
-      output = `bundle exec #{path('bin')}/smartanswer-to-smartdown #{sample_dir + 'input/lib/flows/check-uk-visa.rb'} #{@tmpdir} 2>&1`
+      output = `bundle exec #{path('bin')}/smartanswer-to-smartdown #{sample_dir + flow_name + 'input/lib/flows' + "#{flow_name}.rb"} #{@tmpdir} 2>&1`
       raise(output) unless $?.success?
       if !output.strip.empty?
         puts output
       end
     end
+  end
 
-    expect(@tmpdir).to be_an_identical_directory_tree_to(sample_dir + 'expected_output')
+  context "check uk visa" do
+    let(:flow_name) { "check-uk-visa" }
+
+    it "reads a smartanswer, parses it and spits out files" do
+      expect(@tmpdir).to be_an_identical_directory_tree_to(sample_dir + flow_name + 'expected_output')
+    end
+  end
+
+  context "marriage abroad" do
+    let(:flow_name) { "marriage-abroad" }
+
+    it "reads a smartanswer, parses it and spits out files" do
+      expect(@tmpdir).to be_an_identical_directory_tree_to(sample_dir + flow_name + 'expected_output')
+    end
   end
 end

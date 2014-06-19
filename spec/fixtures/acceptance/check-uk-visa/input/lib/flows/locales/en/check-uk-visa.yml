@@ -14,6 +14,11 @@ en-GB:
           work: "Work or business"
           tourism: "Tourism"
 
+      outcome_os_iom_ci:
+        title:
+        body: |
+          %{iom_ci_os_outcome}
+
       outcome_tourism:
         title: You’ll need a visa to come to the UK to visit
 

@@ -1,0 +1,13 @@
+# Where do you live?
+
+* uk_england: England
+* uk_wales: Wales
+* uk_scotland: Scotland
+* uk_ni: Northern Ireland
+* uk_iom: Isle of Man
+* uk_ci: Channel Islands
+
+-----
+
+# Next node
+

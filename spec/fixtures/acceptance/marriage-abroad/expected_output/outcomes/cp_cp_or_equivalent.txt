@@ -1,0 +1,43 @@
+# Civil partnership in %{country_name_lowercase_prefix}
+
+
+Contact the [Embassy of %{country_name_lowercase_prefix}](/government/publications/foreign-embassies-in-the-uk) before making any plans to find out about local laws, including what documents you’ll need.[^2]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^2]
+Contact the relevant local authorities in %{country_name_lowercase_prefix} to find out about local laws, including what documents you’ll need.[^3][^4]
+Contact your nearest embassy or consulate of %{country_name_lowercase_prefix} to find out about local laws, including what documents you’ll need.[^5][^6][^4]
+##What you need to do
+
+You may be asked to provide a certificate of no impediment (CNI) or a similar document to prove you're allowed to enter into a civil partnership or equivalent in %{country_name_lowercase_prefix}.
+
+Contact the local British embassy or consulate where you’re planning the ceremony to find out what you need to do.
++[data_partial:overseas_passports_embassies:overseas_passports_embassies]
+##Naturalisation of your partner if they move to the UK[^7]
+
+Your partner can apply to [become a British citizen](/becoming-a-british-citizen/if-your-spouse-is-a-british-citizen) once they’ve lived in the UK for 3 years.[^7]
+##Fees
+
+Service | Fee
+-|-
+Issuing a CNI or equivalent | £65
+You normally have to pay fees for consular services in the local currency - these are shown in the list of [consular fees for %{country_name_lowercase_prefix}](/government/publications/france-consular-fees).[^8][^9]
+You normally have to pay fees for consular services in the local currency - these are shown in the list of [consular fees for %{country_name_lowercase_prefix}](/government/publications/%{ceremony_country}-consular-fees).[^10][^9]
+^You can only pay by cash in %{country_name_lowercase_prefix}. This must be in the local currency.^[^11]
+You can pay by cash or credit card, but not by personal cheque.[^12][^13]
+
+*[GRO]:General Register Office
+*[FCO]:Foreign &amp; Commonwealth Office
+
+[^1]: data_query.cp_equivalent_countries?(ceremony_country)
+[^2]: ["uk"].include?(resident_of)
+[^3]: (ceremony_country == residency_country)
+[^4]: (not ["uk"].include?(resident_of))
+[^5]: (ceremony_country != residency_country) and ["uk"].exclude?(resident_of)
+[^6]: (not (ceremony_country == residency_country))
+[^7]: ["partner_british"].exclude?(partner_nationality)
+[^8]: ["monaco"].include?(ceremony_country)
+[^9]: (not (["czech-republic"].include?(ceremony_country) or data_query.countries_without_consular_facilities?(ceremony_country)))
+[^10]: (not ["monaco"].include?(ceremony_country))
+[^11]: ["iceland", "luxembourg", "slovenia"].include?(ceremony_country)
+[^12]: ["czech-republic", "cote-d-ivoire"].exclude?(ceremony_country)
+[^13]: (not ["iceland", "luxembourg", "slovenia"].include?(ceremony_country))

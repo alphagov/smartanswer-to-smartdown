@@ -1,0 +1,59 @@
+# Civil partnership in %{country_name_lowercase_prefix}
+
+
+^You should [get legal advice](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) before making any plans.^
+Same-sex relationships in US states that are recognised as civil partnerships under British law are known as:[^2]
+
+- ‘domestic partnership’ or ‘marriage’ (California)
+- ‘the relationship between designated beneficiaries’ (Colorado)
+- ‘civil union’ or ‘marriage’ (Connecticut)
+- ‘civil union’ (Delaware)
+- ‘marriage’ (District of Colombia)
+- ‘civil union’ or ‘reciprocal beneficiary relationship’ (Hawaii)
+- ‘civil union’ (Illinois)
+- ‘marriage’ (Iowa)
+- ‘domestic partnership’ (Maine)
+- ‘marriage’ (Massachusetts)
+- ‘domestic partnership’ (Nevada)
+- ‘marriage’ (New Hampshire)
+- ‘civil union’ or ‘domestic partnership’ (New Jersey)
+- ‘marriage’ (New York)
+- ‘domestic partnership’ (Oregon)
+- ‘civil union’ (Rhode Island)
+- ‘civil union’ or ‘marriage’ (Vermont)
+- ‘state registered domestic partnership’ (Washington)
+- ‘domestic partnership’ (Wisconsin)[^2]
+##What you need to do
+%{country_name_lowercase_prefix} is one of the Dutch Caribbean islands.[^3]
+Contact the [Dutch Embassy in the UK](http://www.netherlands-embassy.org.uk/about/index.php?i=121) before making any plans to find out about local laws, including what documents you’ll need.[^4][^3]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^4][^3]
+Contact the relevant local authorities in %{country_name_lowercase_prefix} to find out about local laws, including what documents you’ll need.[^5][^6][^3]
+Contact your nearest Dutch embassy or consulate before making any plans to find out about local laws, including what documents you’ll need.[^7][^8][^6][^3]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^7][^8][^6][^3]
+Contact your [nearest embassy or consulate](/government/publications/foreign-embassies-in-the-uk) representing %{country_name_lowercase_prefix} before making any plans to find out about local laws, including what documents you’ll need.[^4][^9]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^4][^9]
+Contact the relevant local authorities in %{country_name_lowercase_prefix} to find out about local laws, including what documents you’ll need.[^5][^6][^9]
+Contact your nearest embassy or consulate representing %{country_name_lowercase_prefix} to find out about local laws, including what documents you’ll need.[^7][^8][^6][^9]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^7][^8][^6][^9]
+There aren’t any British consular facilities to register a same-sex relationship, or get legal documents to prove you’re eligible enter into a same-sex relationship, in %{country_name_lowercase_prefix}.
+##Naturalisation of your partner if they move to the UK[^10]
+
+Your partner can apply to [become a British citizen](/becoming-a-british-citizen/if-your-spouse-is-a-british-citizen) once they’ve lived in the UK for 3 years.[^10]
+
+*[GRO]:General Register Office
+*[FCO]:Foreign &amp; Commonwealth Office
+
+[^1]: data_query.cp_cni_not_required_countries?(ceremony_country)
+[^2]: ["usa"].include?(ceremony_country)
+[^3]: ["bonaire-st-eustatius-saba"].include?(ceremony_country)
+[^4]: ["uk"].include?(resident_of)
+[^5]: (ceremony_country == residency_country)
+[^6]: (not ["uk"].include?(resident_of))
+[^7]: (ceremony_country != residency_country) and ["uk"].exclude?(resident_of)
+[^8]: (not (ceremony_country == residency_country))
+[^9]: (not ["bonaire-st-eustatius-saba"].include?(ceremony_country))
+[^10]: ["partner_british"].exclude?(partner_nationality)

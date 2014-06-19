@@ -1,0 +1,114 @@
+# Marriage in %{country_name_lowercase_prefix}
+
+Contact the [Embassy of %{country_name_lowercase_prefix}](/government/publications/foreign-embassies-in-the-uk) before making any plans to find out about local marriage laws, including what documents you’ll need.[^1]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^1]
+Contact the relevant local authorities in %{country_name_lowercase_prefix} to find out about local marriage laws, including what documents you’ll need.[^2][^3]
+Contact your nearest embassy or consulate of %{country_name_lowercase_prefix} to find out about local marriage laws, including what documents you’ll need.[^4][^5][^3]
+
+You should also check the [travel advice for %{country_name_lowercase_prefix}](/foreign-travel-advice/%{ceremony_country}).[^4][^5][^3]
+^You should [get legal advice](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) before making any plans.^
+^There are no civil marriages in the United Arab Emirates, but you can get married through a religious ceremony at a church or Sharia court.^[^6]
+
+You may be able to get married at the British Embassy if you're both resident in the United Arab Emirates and can prove that there are no other suitable facilities.[^6]
+
+Contact the British Embassy in the United Arab Emirates for more information.[^6]
+##What you need to do[^7]
+
+You will be asked to provide an ‘affirmation of freedom to marry’ document to prove you’re allowed to marry.[^7]
+##What you need to do[^8][^9]
+##What you need to do[^10][^9]
+
+You may be asked to provide an 'affirmation of freedom to marry' document to prove you’re allowed to marry.[^10][^9]
+Make an appointment with a UK [notary or commissioner of oaths](http://www.thenotariessociety.org.uk/find-a-notary) to swear an affidavit - a written statement that is used to formally declare that you’re free to marry.[^11]
+Make an appointment at the local British embassy or consulate in %{country_name_lowercase_prefix} to swear an affidavit (written statement of facts) that you’re free to marry. You’ll need to bring your passport and pay a fee.[^12]
+Book your appointment at one of the following:[^8][^12]
+
+  - [British Consulate General Istanbul](https://britishcongenistanbu.clickbook.net)
+  - [British Embassy Ankara](https://britishembassyankara.clickbook.net)
+  - [British Consulate Izmir](https://britishconsulateizmi.clickbook.net)
+  - [British Vice Consulate Antalya](https://britishviceconantaly.clickbook.net)[^8][^12]
++[data_partial:clickbooks:clickbook_data][^13][^14]
+[Book an appointment online](%{clickbook_data})[^15][^14]
++[data_partial:overseas_passports_embassies:overseas_passports_embassies][^16]
+
+^You might need to get your affirmation [translated](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) into the local language and ‘[legalised](/get-document-legalised)’ (certified as genuine) by the local authorities - the embassy or consulate should be able to give you advice.^[^16]
+The embassy will provide you with an oath or affidavit (written statement of facts) stating that you’re free to marry. You can download and fill in (but not sign) the form in advance.[^17]
+
+$D
+[Download 'Affadavit for Marriage' (PDF, 170.34KB)](/government/uploads/system/uploads/attachment_data/file/284905/Marriage_in_the_Philippines_leaflet_affirmation_or_affidavit_of_marital_status_Feb_2014.pdf)
+$D[^17]
+You’ll need to complete an ‘Affidavit for marriage’ form that will be used for your affidavit.  Take the completed form with you to your appointment.[^8]
+You’ll need to get your affidavit ‘legalised’ (certified as genuine) by the local authorities, this is usually done on the same day - the embassy or consulate should be able to give you advice.[^18][^8]
+You’ll need to get your affidavit ‘[legalised](https://www.gov.uk/get-document-legalised)’ (certified as genuine) before you travel to Turkey.[^19][^8]
+If you’ve been divorced or widowed, you’ll need to provide:[^8]
+
+- a [decree absolute or final order](/copy-decree-absolute-final-order) or [death certificate](/order-copy-birth-death-marriage-certificate/)
+- evidence of nationality or residence where your divorce took place if it was outside the UK
+- evidence if you’ve changed your name by deed poll.[^8]
+If you’ve been divorced or widowed, you’ll also need:[^10]
+
+- a [decree absolute or final order](/copy-decree-absolute-final-order), or
+- the [death certificate](/order-copy-birth-death-marriage-certificate/)[^10]
+
+^You’ll also need to provide evidence of nationality or residence where your divorce took place if it was outside the UK. You’ll need to get it [translated](/government/organisations/foreign-commonwealth-office/series/list-of-lawyers) if it’s not in English.^[^10]
+
+You’ll also need to provide evidence if you’ve changed your name by deed poll.[^10]
+^Your partner will probably need to get an equivalent document from their national authorities.^[^20][^8]
+
+Once the document is legalised you’ll need to have it checked at the marriage office nearest to where your marriage will take place.[^20][^8]
+^Your partner will need to get an affirmation as well.^[^21][^8]
+^Your partner will probably need to get an equivalent document from their national authorities.^[^20][^10]
+
+##Naturalisation of your partner if they move to the UK[^20][^10]
+
+Your partner can apply to [become a British citizen](/becoming-a-british-citizen/if-your-spouse-is-a-british-citizen) once they've lived in the UK for 3 years.[^20][^10]
+^Your partner will need to get an affirmation and pay the fee as well.^[^21][^10]
+##Fees[^22]
+
+Service | Fee
+-|-
+Affidavit for marriage | £55[^22]
+##Fees[^23]
+
+Service | Fee
+-|-
+Affirmation for freedom to marry in English | £45
+Affirmation for freedom to marry in any other language | £70[^23]
+You normally have to pay fees for consular services in the local currency - these are shown in the list of [consular fees for %{country_name_lowercase_prefix}](/government/publications/france-consular-fees).[^24][^25]
+You normally have to pay fees for consular services in the local currency - these are shown in the list of [consular fees for %{country_name_lowercase_prefix}](/government/publications/%{ceremony_country}-consular-fees).[^26][^25]
+You can pay by cash (euros only) or credit card (but not Visa Electron).[^14][^25]
+You can pay in cash or with a bank manager's cheque made payable to 'British Embassy'.[^17][^27][^25]
+You can pay by cash or credit card, but not by personal cheque.[^28][^27][^25]
+
+*[GRO]:General Register Office
+*[FCO]:Foreign &amp; Commonwealth Office
+
+[^1]: ["uk"].include?(resident_of)
+[^2]: (ceremony_country == residency_country)
+[^3]: (not ["uk"].include?(resident_of))
+[^4]: (ceremony_country != residency_country) and ["uk"].exclude?(resident_of)
+[^5]: (not (ceremony_country == residency_country))
+[^6]: ["united-arab-emirates"].include?(ceremony_country)
+[^7]: ["south-korea"].include?(ceremony_country)
+[^8]: ["turkey"].include?(ceremony_country)
+[^9]: (not ["south-korea"].include?(ceremony_country))
+[^10]: (not ["turkey"].include?(ceremony_country))
+[^11]: ["turkey"].include?(ceremony_country) and ["uk"].include?(resident_of)
+[^12]: (not (["turkey"].include?(ceremony_country) and ["uk"].include?(resident_of)))
+[^13]: multiple_clickbooks
+[^14]: ["finland"].include?(ceremony_country)
+[^15]: (not multiple_clickbooks)
+[^16]: ["turkey"].exclude?(ceremony_country)
+[^17]: ["philippines"].include?(ceremony_country)
+[^18]: ["turkey"].include?(residency_country)
+[^19]: (not ["turkey"].include?(residency_country))
+[^20]: ["partner_british"].exclude?(partner_nationality)
+[^21]: (not ["partner_british"].exclude?(partner_nationality))
+[^22]: ["turkey", "vietnam", "thailand", "south-korea"].include?(ceremony_country)
+[^23]: (not ["turkey", "vietnam", "thailand", "south-korea"].include?(ceremony_country))
+[^24]: ["monaco"].include?(ceremony_country)
+[^25]: (not data_query.countries_without_consular_facilities?(ceremony_country))
+[^26]: (not ["monaco"].include?(ceremony_country))
+[^27]: (not ["finland"].include?(ceremony_country))
+[^28]: (not ["philippines"].include?(ceremony_country))
