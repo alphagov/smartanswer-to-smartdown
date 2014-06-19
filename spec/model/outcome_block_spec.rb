@@ -17,8 +17,9 @@ en-GB:
 
           %{phrase_list_placeholder}
 
-      eea_passport_phrase: |
-        You have an EEA passport.
+      phrases:
+        eea_passport_phrase: |
+          You have an EEA passport.
 YAML
   }
   let(:translations) {
@@ -31,7 +32,7 @@ YAML
         [
           Model::ConditionalPhrase.new(
             :eea_passport_phrase,
-            Predicate::Raw.new(parse_ruby('eea_passport == true'))
+            [Predicate::Raw.new(parse_ruby('eea_passport == true'))]
           )
         ]
       )
@@ -60,7 +61,7 @@ YAML
     end
 
     it "appends the predicates as footnote definitions" do
-      expect(outcome_block.body.split("\n").last).to eq("[^1]: eea_passport == true")
+      expect(outcome_block.body.split("\n").last).to eq("[^1]: (eea_passport == true)")
     end
   end
 end

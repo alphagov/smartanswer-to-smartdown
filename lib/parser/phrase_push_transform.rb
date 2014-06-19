@@ -1,7 +1,7 @@
 require 'model/conditional_phrase'
 
 module Parser
-  class PhraseTransform < Parser::Transform
+  class PhrasePushTransform < Parser::Transform
     def pattern
       Q? {
         s(:call, s(:lvar, :phrases), :<<, s(:lit, atom % "phrase"))

@@ -14,7 +14,8 @@ module Parser
     end
 
     def transform(sexp, match)
-      Model::OutcomeBlock.new(match["outcome_name"], translations, match["body"].to_a)
+      precalculations = SexpWalker.select_type(match["body"], Model::Precalculation)
+      Model::OutcomeBlock.new(match["outcome_name"], translations, precalculations)
     end
   end
 end
