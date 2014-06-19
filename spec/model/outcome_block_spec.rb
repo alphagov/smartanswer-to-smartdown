@@ -20,24 +20,20 @@ en-GB:
       phrases:
         eea_passport_phrase: |
           You have an EEA passport.
+        eea_passport_phrase2: |
+          You have two EEA passports.
 YAML
   }
-  let(:translations) {
-    Parser::Translations.new('example', translation_yaml)
-  }
-  let(:precalculations) {
+  let(:translations) { Parser::Translations.new('example', translation_yaml) }
+  let(:conditional_phrases) {
     [
-      Model::Precalculation.new(
-        :phrase_list_placeholder,
-        [
-          Model::ConditionalPhrase.new(
-            :eea_passport_phrase,
-            [Predicate::Raw.new(parse_ruby('eea_passport == true'))]
-          )
-        ]
+      Model::ConditionalPhrase.new(
+        :eea_passport_phrase,
+        [Predicate::Raw.new(parse_ruby('eea_passport == true'))]
       )
     ]
   }
+  let(:precalculations) { [Model::Precalculation.new(:phrase_list_placeholder, conditional_phrases)] }
 
   subject(:outcome_block) { described_class.new(name, translations, precalculations) }
 
@@ -62,6 +58,25 @@ YAML
 
     it "appends the predicates as footnote definitions" do
       expect(outcome_block.body.split("\n").last).to eq("[^1]: (eea_passport == true)")
+    end
+
+    xcontext "multiple conditional phrases" do
+      let(:conditional_phrases) {
+        [
+          Model::ConditionalPhrase.new(
+            :eea_passport_phrase,
+            [Predicate::Raw.new(parse_ruby('eea_passport == true'))]
+          ),
+          Model::ConditionalPhrase.new(
+            :eea_passport_phrase2,
+            [Predicate::Raw.new(parse_ruby('eea_passport == 2'))]
+          )
+        ]
+      }
+
+      it "appends the predicates as footnote definitions" do
+        expect(outcome_block.body).to match("You have an EEA passport.[^1]\n\nYou have two EEA passports.[^2]\n\n")
+      end
     end
   end
 end
