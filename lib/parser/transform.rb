@@ -1,4 +1,5 @@
 require 'sexp_path'
+require 'parser/sexp_walker'
 
 module Parser
   class TransformChain
@@ -40,19 +41,12 @@ module Parser
       TransformChain.new(self, other)
     end
 
-    def walk_sexp(sexp, stack = [], &block)
-      sexp.each do |sub_sexp|
-        walk_sexp(sub_sexp, &block) if sub_sexp.is_a?(Sexp)
-        block.call(sub_sexp)
-      end
+    def walk_sexp(sexp, &block)
+      Parser::SexpWalker.walk(sexp, &block)
     end
 
     def sexp_select(sexp, &block)
-      collection = []
-      walk_sexp(sexp) { |elem|
-        collection << elem if yield(elem)
-      }
-      collection
+      Parser::SexpWalker.select(sexp, &block)
     end
 
   private

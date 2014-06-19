@@ -1,4 +1,4 @@
-require 'parser/unparser'
+require 'ruby2ruby'
 
 module Model
   OutcomeBlock = Struct.new(:name, :translations, :precalculations) do
@@ -44,11 +44,11 @@ module Model
     end
 
     def unparse(predicate)
-      Parser::Unparser.new.apply(predicate.sexp)
+      Ruby2Ruby.new.process(predicate.sexp)
     end
 
     def strip_trailing_newline(text)
-      text.gsub(/\n+\Z/, '')
+      text.to_s.gsub(/\n+\Z/, '')
     end
 
     def in_paragraphs(markdown_text)
@@ -69,7 +69,7 @@ module Model
     end
 
     def lookup_phrase(phrase_name)
-      translations.get("#{phrase_name}")
+      translations.get("phrases.#{phrase_name}")
     end
 
     def precalculation(name)

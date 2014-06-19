@@ -22,6 +22,9 @@ GEM
     rspec-mocks (3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.0)
+    ruby2ruby (2.1.1)
+      ruby_parser (~> 3.1)
+      sexp_processor (~> 4.0)
     ruby_parser (3.6.1)
       sexp_processor (~> 4.1)
     sexp_path (0.5.2)
@@ -35,5 +38,6 @@ DEPENDENCIES
   debugger
   psych
   rspec
+  ruby2ruby
   ruby_parser
   sexp_path
