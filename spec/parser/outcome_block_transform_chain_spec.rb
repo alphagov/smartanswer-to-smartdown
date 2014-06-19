@@ -132,6 +132,47 @@ describe Parser::OutcomeBlockTransformChain do
         )
       end
     end
+
+    context "a dsym phrase" do
+      let(:ruby) { <<-RUBY
+        outcome(:my_outcome){
+          precalculate(:precalculation) {
+            #{inner_ruby}
+          }
+        }
+        RUBY
+      }
+
+      context "via push assignment" do
+        let(:inner_ruby) {
+          %q{
+            phrases = PhraseList.new
+            phrases << :"phrase_#{n}"
+          }
+        }
+
+        it "generates a conditional phrase with an s-expression as the name" do
+          expect(transformed.precalculations.first.conditional_phrases.first).to eq(
+            Model::ConditionalPhrase.new(s("phrase_", s(:evstr, s(:call, nil, :n))))
+          )
+        end
+      end
+
+      context "via initialization" do
+        let(:inner_ruby) {
+          %q{
+            PhraseList.new(:"phrase_#{n}")
+          }
+        }
+
+        it "generates a conditional phrase with an s-expression as the name" do
+          expect(transformed.precalculations.first.conditional_phrases.first).to eq(
+            Model::ConditionalPhrase.new(s("phrase_", s(:evstr, s(:call, nil, :n))))
+          )
+        end
+      end
+
+    end
   end
 
   context "an outcome with two precalculation blocks" do
@@ -220,6 +261,6 @@ describe Parser::OutcomeBlockTransformChain do
         )
       end
     end
-  end
 
+  end
 end
