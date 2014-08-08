@@ -25,22 +25,14 @@ module Model
         precalculation($1).conditional_phrases.map do |conditional_phrase|
           render_conditional_phrase(conditional_phrase)
         end.join("\n\n")
-      end + render_predicate_definitions
+      end
     end
 
     def render_conditional_phrase(conditional_phrase)
-      indicators = conditional_phrase.predicates.map { |predicate| footnote_reference(predicate) }.join
+      clause = conditional_phrase.predicates.reverse.map { |predicate| unparse(predicate) }.join(" AND ")
       phrase = lookup_phrase(conditional_phrase.phrase)
 
-      in_paragraphs(strip_trailing_newline(phrase)).map do |paragraph|
-        paragraph + indicators
-      end.join("\n\n")
-    end
-
-    def render_predicate_definitions
-      "\n" + @predicates.map.with_index do |predicate, i|
-        footnote_reference(predicate) + ": " + unparse(predicate)
-      end.join("\n") + "\n"
+      "$IF #{clause}\n\n#{strip_trailing_newline(phrase)}\n\n$ENDIF"
     end
 
     def unparse(predicate)
