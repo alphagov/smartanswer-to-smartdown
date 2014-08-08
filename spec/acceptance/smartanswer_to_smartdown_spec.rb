@@ -56,7 +56,7 @@ describe "smartanswer-to-smartdown" do
     end
   end
 
-  context "marriage abroad" do
+  xcontext "marriage abroad" do
     let(:flow_name) { "marriage-abroad" }
 
     it "reads a smartanswer, parses it and spits out files" do
