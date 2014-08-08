@@ -52,7 +52,7 @@ class SmartanswerToSmartdown
   def render_rule(question, rule, indent = "")
     case rule
     when Model::OnConditionRule
-      lines = ["* #{render_predicate(question, rule.predicate)}"] +
+      lines = ["#{indent}* #{render_predicate(question, rule.predicate)}"] +
         rule.inner_rules.map {|inner| render_rule(question, inner, indent + "  ")}
       lines.join("\n")
     when Model::Rule
