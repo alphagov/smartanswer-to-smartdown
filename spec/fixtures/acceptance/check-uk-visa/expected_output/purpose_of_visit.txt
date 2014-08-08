@@ -4,8 +4,6 @@
 * study: Study
 * tourism: Tourism
 
------
-
 # Next node
 
 * purpose_of_visit is 'work' => outcome_work
