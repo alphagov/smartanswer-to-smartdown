@@ -2,7 +2,11 @@
 
 The visa you apply for depends on your circumstances.
 
-You may work here, yay![^1]
+$IF (purpose_of_visit == "work_in_turkey")
+
+You may work here, yay!
+
+$ENDIF
 
 ###Skilled workers
 
@@ -38,5 +42,3 @@ A ‘high value worker’ visa may be suitable if you’re:
 ###Commonwealth citizens
 
 You may be eligible for a [UK ancestry visa](/ancestry-visa) if one of your grandparents was born in the UK.
-
-[^1]: (purpose_of_visit == "work_in_turkey")
