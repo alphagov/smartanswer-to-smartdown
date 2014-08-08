@@ -1,5 +1,6 @@
 # <%= question.title %>
 
+[choice: <%= question.response_variable_name %>]
 % question.options.each do |o|
 * <%= o.name %>: <%= o.label %>
 % end
